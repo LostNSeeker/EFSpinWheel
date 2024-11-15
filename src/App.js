@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Wheel from './Wheel';
 
-function App() {
+const App = () => {
+  const [result, setResult] = useState(null);
+
+  const handleSpinEnd = (prize) => {
+    setResult(prize);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Spin the Wheel Game</h1>
+      {/* <Wheel onSpinEnd={handleSpinEnd} /> */}
+      {result && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Congratulations!</h2>
+          <p>You won: {result}</p>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
