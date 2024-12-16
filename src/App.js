@@ -10,7 +10,7 @@ const App = () => {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Spin the Wheel Game</h1>
+      <h1>Spin the Wheel Game!</h1>
       {/* <Wheel onSpinEnd={handleSpinEnd} /> */}
       {result && (
         <div style={{ marginTop: '20px' }}>
