@@ -113,10 +113,14 @@ const SpinWheel = () => {
       {/* Header Section */}
       <header className="header">
         <div className="header-left">
-          <svg className="wallet-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M21 7H3V5h18v2zm0 10H3V9h18v8zm-4-4H5v2h12v-2z"/>
+          <svg
+            className="wallet-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M21 7H3V5h18v2zm0 10H3V9h18v8zm-4-4H5v2h12v-2z" />
           </svg>
-          Wallet: {coins} Coins
+          {coins} Coins
         </div>
         <div className="header-center">
           <img src="/buyonegramlogo.jpeg" alt="Logo" className="logo" />
@@ -242,7 +246,12 @@ const SpinWheel = () => {
       <footer className="footer">
         <div className="marquee-container">
           <div className="marquee-content">
-            This is a demo marquee scrolling text. You can put any text or offers here!
+            This is a demo marquee scrolling text. You can put any text or
+            offers here! lorem ipsum jhbfeksve erbwksdvbcewrb erbfvicyewrbvie
+            erbciewyrbv bficerwbvuwer kerbwfvkucwerbf erfdbverwkufj
+            kubgrleifgnvliwetkg ukerbfdgviuetbfgv iruefbviutebfv
+            ueirbgviuoerbfgov iruebgfvieuorbtgfouvbetroung iuerbfgviuerbgouvwebr
+            iuebrsgfiduvberwuosbgvor iuebrgfivubiurtebfg erifgbvietrubfgvouewnt
           </div>
         </div>
       </footer>
