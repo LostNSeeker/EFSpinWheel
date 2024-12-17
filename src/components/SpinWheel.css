@@ -39,7 +39,7 @@ body {
     border-radius: 25px;
     color: #fff;
     padding: 10px 20px;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 1rem;
     cursor: pointer;
     font-weight: bold;
@@ -229,8 +229,18 @@ body {
     }
   
     .shop-now-button {
+        margin-bottom: 20px;
       padding: 8px 15px;
       font-size: 0.9rem;
     }
   }
+
+  .marquee-img {
+    display: inline-block;
+    width: 100px; /* adjust as needed */
+    height: auto;
+    margin: 0 10px; /* spacing between images */
+    vertical-align: middle;
+  }
+  
   

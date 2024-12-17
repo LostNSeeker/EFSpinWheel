@@ -242,16 +242,19 @@ const SpinWheel = () => {
         )}
       </div>
 
-      {/* Footer with CSS Marquee */}
+      {/* Footer with CSS Marquee of 10 images */}
       <footer className="footer">
         <div className="marquee-container">
           <div className="marquee-content">
-            This is a demo marquee scrolling text. You can put any text or
-            offers here! lorem ipsum jhbfeksve erbwksdvbcewrb erbfvicyewrbvie
-            erbciewyrbv bficerwbvuwer kerbwfvkucwerbf erfdbverwkufj
-            kubgrleifgnvliwetkg ukerbfdgviuetbfgv iruefbviutebfv
-            ueirbgviuoerbfgov iruebgfvieuorbtgfouvbetroung iuerbfgviuerbgouvwebr
-            iuebrsgfiduvberwuosbgvor iuebrgfivubiurtebfg erifgbvietrubfgvouewnt
+            {/* 10 images */}
+            {Array.from({ length: 10 }).map((_, i) => (
+              <img
+                key={i}
+                src="/buyonegramlogo.jpeg"
+                alt="Marquee"
+                className="marquee-img"
+              />
+            ))}
           </div>
         </div>
       </footer>
