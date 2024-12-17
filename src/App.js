@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
-import Wheel from './Wheel';
+// src/App.js
+import React from 'react';
+import SpinWheel from './components/SpinWheel';
 
-const App = () => {
-  const [result, setResult] = useState(null);
-
-  const handleSpinEnd = (prize) => {
-    setResult(prize);
-  };
-
+function App() {
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Spin the Wheel Game!</h1>
-      {/* <Wheel onSpinEnd={handleSpinEnd} /> */}
-      {result && (
-        <div style={{ marginTop: '20px' }}>
-          <h2>Congratulations!</h2>
-          <p>You won: {result}</p>
-        </div>
-      )}
+    <div style={{ 
+      minHeight: '100vh',
+      background: '#f0f0f0'
+      // Removed flex and center styles
+    }}>
+      <SpinWheel />
     </div>
   );
-};
+}
 
 export default App;
