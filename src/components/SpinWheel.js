@@ -99,12 +99,10 @@ const SpinWheel = () => {
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    // Add 5 coins to wallet after successful registration
     setCoins(coins + 5);
     setShowRegisterPopup(false);
     setShowSuccessMessage(true);
 
-    // Hide success message after a short delay
     setTimeout(() => {
       setShowSuccessMessage(false);
     }, 2000);
@@ -118,7 +116,7 @@ const SpinWheel = () => {
           <svg className="wallet-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M21 7H3V5h18v2zm0 10H3V9h18v8zm-4-4H5v2h12v-2z"/>
           </svg>
-          {coins} Coins
+          Wallet: {coins} Coins
         </div>
         <div className="header-center">
           <img src="/buyonegramlogo.jpeg" alt="Logo" className="logo" />
@@ -239,6 +237,15 @@ const SpinWheel = () => {
           </div>
         )}
       </div>
+
+      {/* Footer with CSS Marquee */}
+      <footer className="footer">
+        <div className="marquee-container">
+          <div className="marquee-content">
+            This is a demo marquee scrolling text. You can put any text or offers here!
+          </div>
+        </div>
+      </footer>
     </>
   );
 };
