@@ -115,42 +115,41 @@ const SpinWheel = () => {
 
   const checkSpinEligibility = async (email, phone) => {
     try {
-      if (!email && !phone) return true;
-
-      // Check if user exists
+      // Fix: Properly format the OR condition
       const { data: existingUser } = await supabase
-        .from("users")
-        .select("id")
-        .or(`email.eq.${email},phone.eq.${phone}`)
+        .from('users')
+        .select('id')
+        .or(`email.eq."${email}",phone.eq."${phone}"`)
         .single();
 
       if (!existingUser) return true;
 
-      // Check last spin
       const { data: lastSpin } = await supabase
-        .from("spins")
-        .select("spin_time")
-        .eq("user_id", existingUser.id)
-        .order("spin_time", { ascending: false })
+        .from('spins')
+        .select('spin_time')
+        .eq('user_id', existingUser.id)
+        .order('spin_time', { ascending: false })
         .limit(1)
         .single();
 
       if (!lastSpin) return true;
 
       const timeSinceLastSpin = new Date() - new Date(lastSpin.spin_time);
-      const timeRemaining = calculateTimeRemaining(lastSpin.spin_time);
-
+      
       if (timeSinceLastSpin < 24 * 60 * 60 * 1000) {
-        setCooldownTime(timeRemaining);
+        // Calculate remaining time
+        const remainingTime = calculateTimeRemaining(lastSpin.spin_time);
+        setCooldownTime(remainingTime);
         return false;
       }
 
       return true;
     } catch (error) {
-      console.error("Error checking spin eligibility:", error);
-      return true;
+      console.error('Error checking spin eligibility:', error);
+      // In case of error, prevent spin to be safe
+      return false;
     }
-  };
+};
 
   const handleClaimPrize = () => {
     setShowModal(false);
