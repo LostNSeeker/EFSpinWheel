@@ -10,6 +10,7 @@ const SpinWheel = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showCooldownMessage, setShowCooldownMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [cooldownTime, setCooldownTime] = useState("");
   const [coins, setCoins] = useState(0);
   const [formData, setFormData] = useState({
@@ -94,19 +95,17 @@ const SpinWheel = () => {
     return `${hours}h ${minutes}m`;
   };
 
-  const spinWheel = () => {
-    if (isSpinning) return;
+  const spinWheel = async () => {
+    if (isSpinning || isCheckingEligibility) return;
     setIsSpinning(true);
-
+  
     // Always choose one of the 5-coin segments
-    const winningIndex =
-      fiveCoinIndices[Math.floor(Math.random() * fiveCoinIndices.length)];
-    const baseSpins = (Math.floor(Math.random() * 5) + 5) * 360; // 5-10 full spins
-    const targetRotation =
-      baseSpins + (360 - winningIndex * (360 / segments.length));
-
+    const winningIndex = fiveCoinIndices[Math.floor(Math.random() * fiveCoinIndices.length)];
+    const baseSpins = (Math.floor(Math.random() * 5) + 5) * 360;
+    const targetRotation = baseSpins + (360 - winningIndex * (360 / segments.length));
+  
     setRotation(targetRotation);
-
+  
     setTimeout(() => {
       setIsSpinning(false);
       setShowModal(true);
@@ -115,41 +114,57 @@ const SpinWheel = () => {
 
   const checkSpinEligibility = async (email, phone) => {
     try {
-      // Fix: Properly format the OR condition
-      const { data: existingUser } = await supabase
+      if (!email && !phone) return true; // If neither email nor phone provided, allow spin
+  
+      // Check if user exists with either email or phone
+      const { data: existingUsers, error } = await supabase
         .from('users')
-        .select('id')
-        .or(`email.eq."${email}",phone.eq."${phone}"`)
-        .single();
-
-      if (!existingUser) return true;
-
-      const { data: lastSpin } = await supabase
+        .select('id, email, phone')
+        .or(`email.eq.${email},phone.eq.${phone}`);
+  
+      if (error) throw error;
+  
+      // If no user found, they can spin
+      if (!existingUsers || existingUsers.length === 0) return true;
+  
+      // Get the user's latest spin
+      const { data: lastSpin, error: spinError } = await supabase
         .from('spins')
         .select('spin_time')
-        .eq('user_id', existingUser.id)
+        .eq('user_id', existingUsers[0].id)
         .order('spin_time', { ascending: false })
         .limit(1)
         .single();
-
+  
+      if (spinError && spinError.code !== 'PGRST116') throw spinError;
+  
+      // If no previous spins found, they can spin
       if (!lastSpin) return true;
-
-      const timeSinceLastSpin = new Date() - new Date(lastSpin.spin_time);
-      
-      if (timeSinceLastSpin < 24 * 60 * 60 * 1000) {
+  
+      // Calculate time since last spin
+      const lastSpinTime = new Date(lastSpin.spin_time);
+      const currentTime = new Date();
+      const timeDifference = currentTime - lastSpinTime;
+      const hoursDifference = timeDifference / (1000 * 60 * 60);
+  
+      // If less than 24 hours have passed
+      if (hoursDifference < 24) {
         // Calculate remaining time
-        const remainingTime = calculateTimeRemaining(lastSpin.spin_time);
-        setCooldownTime(remainingTime);
+        const remainingHours = Math.floor(24 - hoursDifference);
+        const remainingMinutes = Math.floor((24 - hoursDifference) * 60 % 60);
+        const timeString = `${remainingHours}h ${remainingMinutes}m`;
+        setCooldownTime(timeString);
         return false;
       }
-
+  
       return true;
+  
     } catch (error) {
       console.error('Error checking spin eligibility:', error);
-      // In case of error, prevent spin to be safe
+      alert('Error checking eligibility. Please try again.');
       return false;
     }
-};
+  };
 
   const handleClaimPrize = () => {
     setShowModal(false);
@@ -166,73 +181,84 @@ const SpinWheel = () => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+  
     try {
+      // Check eligibility first
       const canSpin = await checkSpinEligibility(formData.email, formData.phone);
       
       if (!canSpin) {
         setShowRegisterPopup(false);
         setShowCooldownMessage(true);
         setTimeout(() => setShowCooldownMessage(false), 3000);
+        setIsSubmitting(false);
         return;
       }
   
-      // Simulate a minimum loading time for better UX
-      await Promise.all([
-        // Your existing Supabase operations
-        (async () => {
-          const { data: existingUser } = await supabase
-            .from('users')
-            .select('*')
-            .eq('phone', formData.phone)
-            .single();
+      // Check if user exists
+      const { data: existingUser, error: fetchError } = await supabase
+        .from('users')
+        .select('*')
+        .or(`email.eq.${formData.email},phone.eq.${formData.phone}`)
+        .single();
   
-          let userId;
+      let userId;
   
-          if (existingUser) {
-            const { data: updatedUser } = await supabase
-              .from('users')
-              .update({ 
-                coins: existingUser.coins + 5,
-                email: formData.email
-              })
-              .eq('id', existingUser.id)
-              .select()
-              .single();
+      if (existingUser) {
+        // Update existing user
+        const { data: updatedUser, error: updateError } = await supabase
+          .from('users')
+          .update({
+            coins: existingUser.coins + 5,
+            email: formData.email, // Update email in case it changed
+            phone: formData.phone  // Update phone in case it changed
+          })
+          .eq('id', existingUser.id)
+          .select()
+          .single();
   
-            userId = existingUser.id;
-            setCoins(updatedUser.coins);
-          } else {
-            const { data: newUser } = await supabase
-              .from('users')
-              .insert([{ 
-                email: formData.email,
-                phone: formData.phone,
-                coins: 5
-              }])
-              .select()
-              .single();
+        if (updateError) throw updateError;
+        userId = existingUser.id;
+        setCoins(updatedUser.coins);
+      } else {
+        // Create new user
+        const { data: newUser, error: insertError } = await supabase
+          .from('users')
+          .insert([{
+            email: formData.email,
+            phone: formData.phone,
+            coins: 5 // Initial coins for new user
+          }])
+          .select()
+          .single();
   
-            userId = newUser.id;
-            setCoins(newUser.coins);
-          }
+        if (insertError) throw insertError;
+        userId = newUser.id;
+        setCoins(5); // Set initial coins for new user
+      }
   
-          await supabase
-            .from('spins')
-            .insert([{ user_id: userId }]);
-        })(),
-        // Minimum delay for animation
-        new Promise(resolve => setTimeout(resolve, 1500))
-      ]);
+      // Record the spin
+      const { error: spinError } = await supabase
+        .from('spins')
+        .insert([{
+          user_id: userId,
+          spin_time: new Date().toISOString()
+        }]);
   
+      if (spinError) throw spinError;
+  
+      // Add delay for better UX
+      await new Promise(resolve => setTimeout(resolve, 1500));
+  
+      // Show success message
       setShowRegisterPopup(false);
       setShowSuccessMessage(true);
-      setFormData({ email: '', phone: '' });
+      setFormData({ email: '', phone: '' }); // Clear form
   
+      // Hide success message after delay
       setTimeout(() => {
         setShowSuccessMessage(false);
       }, 2000);
-      
+  
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
