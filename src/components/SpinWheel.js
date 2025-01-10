@@ -284,8 +284,11 @@ const SpinWheel = () => {
           <img src="/buyonegramlogo.jpeg" alt="Logo" className="logo" />
         </div>
         <div className="header-right">
-          <button className="shop-now-button">Shop Now</button>
-        </div>
+  <a href="https://shop.buyonegram.com/" target="_blank" rel="noopener noreferrer">
+    <button className="shop-now-button">Shop Now</button>
+  </a>
+</div>
+
       </header>
 
       <div className="main-content">
