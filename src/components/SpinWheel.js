@@ -269,6 +269,7 @@ const SpinWheel = () => {
 
   return (
     <>
+  /*navbar*/
       <header className="header">
         <div className="header-left">
           <svg
@@ -280,11 +281,11 @@ const SpinWheel = () => {
           </svg>
           {coins} Coins
         </div>
-        <div className="header-center">
-          <img src="/buyonegramlogo.jpeg" alt="Logo" className="logo" />
+        <div className="header-center ">
+          <img src="/logoEF.png" alt="Logo" className="logo" />
         </div>
         <div className="header-right">
-  <a href="https://shop.buyonegram.com/" target="_blank" rel="noopener noreferrer">
+  <a href="https://www.EnerzyFlow.com/" target="_blank" rel="noopener noreferrer">
     <button className="shop-now-button">Shop Now</button>
   </a>
 </div>
@@ -455,7 +456,7 @@ const SpinWheel = () => {
             {Array.from({ length: 10 }).map((_, i) => (
               <img
                 key={i}
-                src="/buyonegramlogo.jpeg"
+                src="/logoEF.png"
                 alt="Marquee"
                 className="marquee-img"
               />
