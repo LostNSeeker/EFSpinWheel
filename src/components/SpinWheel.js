@@ -269,7 +269,6 @@ const SpinWheel = () => {
 
   return (
     <>
-  /*navbar*/
       <header className="header">
         <div className="header-left">
           <svg
@@ -282,7 +281,7 @@ const SpinWheel = () => {
           {coins} Coins
         </div>
         <div className="header-center ">
-          <img src="/logoEF.png" alt="Logo" className="logo" />
+          <img src="/EFlogo.png" alt="Logo" className="logo" />
         </div>
         <div className="header-right">
   <a href="https://www.EnerzyFlow.com/" target="_blank" rel="noopener noreferrer">
@@ -456,7 +455,7 @@ const SpinWheel = () => {
             {Array.from({ length: 10 }).map((_, i) => (
               <img
                 key={i}
-                src="/logoEF.png"
+                src="/EFlogo.png"
                 alt="Marquee"
                 className="marquee-img"
               />

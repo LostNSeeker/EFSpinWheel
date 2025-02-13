@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: 'Inter', Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  color: #0f172a;
   min-height: 100vh;
 }
 
@@ -13,18 +13,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(to right, #1e293b, #334155);
+  background: linear-gradient(to right, #0f172a, #0f172a);
   padding: 0 20px;
   box-sizing: border-box;
-  border-bottom: 1px solid #475569;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e0f2fe;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
 }
-.header-left,
-.header-right {
+.header-left
+ {
+  display: flex;
+  align-items: center;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #0284c7;
+}
+
+.header-right{
   display: flex;
   align-items: center;
 }
@@ -59,7 +67,7 @@ body {
 .wallet-icon {
   width: 24px;
   height: 24px;
-  fill: #60a5fa;
+  fill: #0284c7;
   margin-right: 8px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
@@ -116,8 +124,9 @@ body {
   padding: 30px;
   background: rgba(30, 41, 59, 0.5);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 40px rgba(2, 132, 199, 0.2);
   backdrop-filter: blur(10px);
+  transform: translateY(-5px);
 }
 
 .wheel-wrapper {
@@ -132,13 +141,16 @@ body {
   height: 0;
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  border-top: 25px solid #60a5fa;
+  /* border-top: 25px solid #60a5fa; */
   position: absolute;
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+
+  border-top: 25px solid #0284c7;
+  transition: transform 0.3s ease;
 }
 
 .wheel {
@@ -164,6 +176,8 @@ body {
   padding: 20px;
   box-sizing: border-box;
   z-index: 999;
+  transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1), filter 0.3s ease;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
 }
 
 .modal-content {
