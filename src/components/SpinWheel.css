@@ -9,7 +9,7 @@ body {
 /* Header Styles */
 .header {
   width: 100%;
-  height: 80px; /* Increased height to accommodate larger logo */
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,16 +23,18 @@ body {
   left: 0;
   z-index: 10;
 }
-.header-left
- {
+
+.header-left {
   display: flex;
   align-items: center;
   background: rgba(59, 130, 246, 0.1);
+  padding: 8px 16px;
+  border-radius: 12px;
   border: 1px solid rgba(59, 130, 246, 0.2);
   color: #0284c7;
 }
 
-.header-right{
+.header-right {
   display: flex;
   align-items: center;
 }
@@ -46,22 +48,15 @@ body {
   flex: 1;
 }
 
-.header-left {
-  background: rgba(59, 130, 246, 0.1);
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
 .logo {
   height: auto;
   width: auto;
-  max-height: 70px; /* Constrains height relative to header */
-  max-width: 200px; /* Prevents logo from being too wide */
+  max-height: 70px;
+  max-width: 200px;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-  object-fit: contain; /* Maintains aspect ratio */
-  position: relative; /* Changed from absolute positioning */
-  transform: none; /* Removed transform */
+  object-fit: contain;
+  position: relative;
+  transform: none;
 }
 
 .wallet-icon {
@@ -105,7 +100,7 @@ body {
 .main-content {
   width: 100%;
   margin: 0;
-  padding: 80px 0 70px 0; /* Increased top padding to account for header and adjusted bottom for footer */
+  padding: 80px 0 70px 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -134,23 +129,11 @@ body {
   max-width: 90%;
   margin: 20px auto;
   position: relative;
-}
-
-.pointer {
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  /* border-top: 25px solid #60a5fa; */
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-
-  border-top: 25px solid #0284c7;
-  transition: transform 0.3s ease;
+  padding: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, 
+              rgba(96, 165, 250, 0.1) 0%,
+              transparent 70%);
 }
 
 .wheel {
@@ -158,7 +141,29 @@ body {
   height: auto;
   transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
   transform-origin: 50% 50%;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.3)) 
+         drop-shadow(0 0 40px rgba(37, 99, 235, 0.2));
+}
+
+.wheel circle {
+  stroke: #60a5fa;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.5));
+}
+
+.pointer {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 25px solid #0284c7;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
 }
 
 /* Modal styles */
