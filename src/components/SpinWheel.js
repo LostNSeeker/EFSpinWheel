@@ -305,7 +305,7 @@ const SpinWheel = () => {
         )}
       </div>
 
-      <div className="restaurant-marquee">
+      {/* <div className="restaurant-marquee">
         <div className="marquee-content">
           {restaurantImages.map((image, index) => (
             <img 
@@ -322,7 +322,7 @@ const SpinWheel = () => {
             />
           ))}
         </div>
-      </div>
+      </div> */}
 
       <style>{`
         .restaurant-marquee {
