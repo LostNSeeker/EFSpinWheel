@@ -25,13 +25,19 @@ body {
 }
 
 .header-left {
-  display: flex;
+  /* display: flex;
   align-items: center;
   background: rgba(59, 130, 246, 0.1);
   padding: 8px 16px;
   border-radius: 12px;
   border: 1px solid rgba(59, 130, 246, 0.2);
-  color: #0284c7;
+  color: #0284c7; */
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex: 1;
 }
 
 .header-right {
@@ -82,12 +88,11 @@ body {
   letter-spacing: 0.5px;
   box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
 }
-
 .shop-now-button:hover,
 .spin-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 8px -1px rgba(218, 165, 32, 0.4);
 }
 
 .spin-button:disabled {
@@ -212,8 +217,8 @@ body {
 
 .continue-button,
 .submit-button {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
+  color: #0f172a;
   border: none;
   padding: 12px 24px;
   border-radius: 12px;
@@ -228,10 +233,9 @@ body {
 
 .continue-button:hover,
 .submit-button:hover {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%);
   transform: translateY(-2px);
 }
-
 .form-group {
   display: flex;
   flex-direction: column;
@@ -391,3 +395,4 @@ body {
     font-size: 0.9rem;
   }
 }
+
